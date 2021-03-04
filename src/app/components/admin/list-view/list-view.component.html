@@ -1,0 +1,53 @@
+<div>
+    <form [formGroup]="searchForm" (submit)="search(searchForm.value)" class="flex">
+        <input type="text" name="title" formControlName="title" class="form-control mb-2 input-margin"
+            placeholder="Búsqueda por título">
+        <button class="btn btn-primary mb-2" type="submit">
+            Buscar
+        </button>
+    </form>
+</div>
+<div class="div-table">
+    <table class="table text-center p-3">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Title</th>
+                <th scope="col">Video</th>
+                <th scope="col">Id</th>
+                <th scope="col">Options</th>
+            </tr>
+        </thead>
+        <tbody *ngIf="elementsFound.length == 0 && title==''">
+            <tr *ngFor="let element of elements | paginate: {itemsPerPage: 6, currentPage: currentpage}; let i = index">
+                <th>{{i}}</th>
+                <td>{{element.title}}</td>
+                <td>{{element.mp4}}</td>
+                <td>{{element._id}}</td>
+                <td>
+                    <app-edit></app-edit>
+                    <button class="btn btn-danger m-1">
+                        Borrar
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+        <tbody *ngIf="elementsFound.length != 0">
+            <tr
+                *ngFor="let element of elementsFound | paginate: {itemsPerPage: 6, currentPage: currentpage}; let i = index">
+                <th>{{i}}</th>
+                <td>{{element.title}}</td>
+                <td>{{element.mp4}}</td>
+                <td>{{element._id}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div *ngIf="elementsFound.length == 0 && title!=''">
+        <div class="alert alert-danger alert-padding" role="alert">
+            Not found!
+        </div>
+    </div>
+    <div class="pagination-div">
+        <pagination-controls (pageChange)="currentpage = $event"></pagination-controls>
+    </div>
+</div>

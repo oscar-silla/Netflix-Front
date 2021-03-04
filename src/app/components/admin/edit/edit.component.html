@@ -1,0 +1,49 @@
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Editar Elemento</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form [formGroup]="editForm" (submit)="save(editForm.value)">
+        <div class="modal-body">
+
+            <input type="text" class="form-control" formControlName="title" name="title" placeholder="Title">
+            <div *ngIf="err_title" class="alert alert-danger mt-2" role="alert">
+                Error al insertar título!
+            </div>
+            <textarea type="text" class="form-control mt-2" formControlName="description" name="description"
+                placeholder="Description"></textarea>
+            <div *ngIf="err_description" class="alert alert-danger mt-2" role="alert">
+               Error al insertar descripción!
+            </div>
+            <input type="text" class="form-control mt-2" formControlName="category" name="category"
+                placeholder="Category">
+            <div *ngIf="err_category" class="alert alert-danger mt-2" role="alert">
+                Error al insertar categoria!
+            </div>
+            <input type="text" class="form-control mt-2" formControlName="actors" name="actors" placeholder="Actors">
+            <div *ngIf="err_actors" class="alert alert-danger mt-2" role="alert">
+                Error al insertar actores!
+            </div>
+            <input type="text" class="form-control mt-2" formControlName="mp4" name="mp4" placeholder="Video format">
+            <div *ngIf="err_mp4" class="alert alert-danger mt-2" role="alert">
+                Error al insertar vídeo!
+            </div>
+            <input type="number" class="form-control mt-2" formControlName="likes" name="likes" placeholder="Likes">
+            <div *ngIf="err_likes" class="alert alert-danger mt-2" role="alert">
+                Error al insertar puntuación!
+            </div>
+            <input type="text" class="form-control mt-2" formControlName="poster" name="poster" placeholder="Poster">
+            <div *ngIf="err_poster" class="alert alert-danger mt-2" role="alert">
+                Error al insertar poster!
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" type="submit" (click)="edit(editForm.value)" [disabled]="disable()">Verificar</button>
+            <button type="button" class="btn btn-outline-dark" type="submit" (click)="c('Save click')" [disabled]="activeSubmit()">Save</button>
+        </div>
+    </form>
+</ng-template>
+
+<button class="btn btn-warning" (click)="open(content)">Edit</button>

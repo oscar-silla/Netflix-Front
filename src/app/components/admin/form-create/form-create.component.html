@@ -1,0 +1,48 @@
+<div class="flex">
+    <div class="card width">
+        <div class="card-header text-center">
+            <span>New Element</span>
+        </div>
+        <div class="card-body">
+            <form (submit)="submit(createForm.value)" [formGroup]="createForm">
+                <input type="text" class="form-control" formControlName="title" name="title" placeholder="Title">
+                <div *ngIf="err_title == true" class="alert alert-danger mt-2" role="alert">
+                    Invalid name!
+                </div>
+                <textarea type="text" class="form-control mt-2" formControlName="description" name="description"
+                    placeholder="Description"></textarea>
+                <div *ngIf="err_description == true" class="alert alert-danger mt-2" role="alert">
+                    Invalid description!
+                </div>
+                <input type="text" class="form-control mt-2" formControlName="category" name="category"
+                    placeholder="Category">
+                <div *ngIf="err_category == true" class="alert alert-danger mt-2" role="alert">
+                    Invalid category!
+                </div>
+                <input type="text" class="form-control mt-2" formControlName="actors" name="actors"
+                    placeholder="Actors">
+                <div *ngIf="err_actors == true" class="alert alert-danger mt-2" role="alert">
+                    Invalid actors!
+                </div>
+                <input type="text" class="form-control mt-2" formControlName="mp4" name="mp4"
+                    placeholder="Video format">
+                <div *ngIf="err_mp4 == true" class="alert alert-danger mt-2" role="alert">
+                    Invalid video format!
+                </div>
+                <input type="number" class="form-control mt-2" formControlName="likes" name="likes" placeholder="Likes">
+                <div *ngIf="err_likes == true" class="alert alert-danger mt-2" role="alert">
+                    Invalid likes!
+                </div>
+                <input type="text" class="form-control mt-2" formControlName="poster" name="poster"
+                    placeholder="Poster">
+                <div *ngIf="err_poster == true" class="alert alert-danger mt-2" role="alert">
+                    Invalid img format!
+                </div>
+                <button class="btn btn-dark mt-2 btn-block">
+                    Create
+                </button>
+            </form>
+        </div>
+    </div>
+    <app-list-view [created]="created" (created_changed)="changeCreate($event)"></app-list-view>
+</div>

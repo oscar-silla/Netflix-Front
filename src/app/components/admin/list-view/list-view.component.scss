@@ -1,0 +1,35 @@
+.flex {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.input-margin {
+   margin-right: 10px;
+}
+
+
+
+.div-table {
+    background-color: white;
+    border-radius: 0.25rem;
+    padding-bottom: 1px;
+    padding-left: 5px;
+    padding-right: 5px;
+    
+}
+
+th, td {
+    color: #212529;
+    font-family: 'Roboto';
+}
+
+.alert-padding {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+
+.pagination-div {
+    color: rgb(20, 20, 20);
+}
