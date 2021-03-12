@@ -1,20 +1,20 @@
-<h3>Popular en Netflix</h3>
+<h3>Tendencias ahora</h3>
 <div class="wrapper">
-    <section class="section1" id="section1">
+    <section class="section1" id="section1Trends">
         <a class="a-left" (click)="toSection3()"><</a>
             <div class="item" *ngFor="let element of firstElements">
                 <img [src]="element.poster" alt="element">
             </div>
         <a class="a-right" (click)="toSection2()">></a>
     </section>
-    <section class="section2" id="section2">
+    <section class="section2" id="section2Trends">
         <a class="a-left" (click)="toSection1()"><</a>
             <div class="item" *ngFor="let element of secondElements">
                 <img [src]="element.poster" alt="element">
             </div>
         <a class="a-right" (click)="toSection3()">></a>
     </section>
-    <section class="section3" id="section3">
+    <section class="section3" id="section3Trends">
         <a class="a-left" (click)="toSection2()"><</a>
             <div class="item" *ngFor="let element of thirdElements">
                 <img [src]="element.poster" alt="element">
@@ -22,5 +22,3 @@
         <a class="a-right" (click)="toSection1()">></a>
     </section>
 </div>
-<app-trends></app-trends>
-<app-top10></app-top10>

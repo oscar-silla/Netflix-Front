@@ -12,9 +12,11 @@ import { Element } from '../../../interfaces/element';
 })
 export class FormCreateComponent implements OnInit {
 
+  elements_length : number;
   createForm: FormGroup;
   error: string[] = [];
   created: boolean;
+  err_type:boolean = false;
   err_title: boolean = false;
   err_description: boolean = false;
   err_category: boolean = false;
@@ -25,6 +27,7 @@ export class FormCreateComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, private elementService: ElementService) {
     this.createForm = this.formBuilder.group({
+      type: ['Pelicula', Validators.required],
       title: ['', Validators.required],
       description: ['', Validators.required],
       category: ['', Validators.required],
@@ -36,10 +39,16 @@ export class FormCreateComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.elementService.getAllElements().subscribe(res => {
+      this.elements_length = res['data'].length;
+    })
   }
 
   // Validations
   validateFields(): void {
+    if (this.error.includes('type')) {
+      this.err_type = true;
+    }
     if (this.error.includes('title')) {
       this.err_title = true;
     }
@@ -65,6 +74,7 @@ export class FormCreateComponent implements OnInit {
 
   // Clean Validations
   clean() {
+    this.err_type = false;
     this.err_title = false;
     this.err_description = false;
     this.err_category = false;
@@ -79,6 +89,7 @@ export class FormCreateComponent implements OnInit {
     this.clean();
     this.error = [];
     // Validations
+    if (element.type == null || element.type == '') this.error.push('type');
     if (element.title == '') this.error.push('title');
     if (element.description == '') this.error.push('description');
     if (element.category == '') this.error.push('category');
@@ -87,7 +98,13 @@ export class FormCreateComponent implements OnInit {
     if (element.likes == '') this.error.push('likes');
     if (element.poster == '') this.error.push('poster');
     if (this.error.length == 0) {
-      return this.elementService.createElement(element).subscribe(res => {
+      let newElement = {
+        id_element: this.elements_length+1,
+        ...element
+      }
+      console.log(newElement);
+      return this.elementService.createElement(newElement).subscribe(res => {
+        console.log(res);
         this.createForm.reset();
         this.created = true;
       });

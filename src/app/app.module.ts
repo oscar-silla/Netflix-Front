@@ -24,6 +24,8 @@ import { FormCreateComponent } from './components/admin/form-create/form-create.
 import { ListViewComponent } from './components/admin/list-view/list-view.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditComponent } from './components/admin/edit/edit.component';
+import { TrendsComponent } from './components/home/trends/trends.component';
+import { Top10Component } from './components/home/top10/top10.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import { EditComponent } from './components/admin/edit/edit.component';
     AdminComponent,
     FormCreateComponent,
     ListViewComponent,
-    EditComponent
+    EditComponent,
+    TrendsComponent,
+    Top10Component
   ],
   imports: [
     BrowserModule,

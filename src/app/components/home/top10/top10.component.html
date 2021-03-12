@@ -1,0 +1,17 @@
+<h3>Top 10</h3>
+<div class="wrapper">
+    <section class="section1" id="section1Top10">
+        <a class="a-left" (click)="toSection2()"><</a>
+            <div class="item" *ngFor="let element of firstElements">
+                <img [src]="element.poster" alt="element">
+            </div>
+        <a class="a-right" (click)="toSection2()">></a>
+    </section>
+    <section class="section2" id="section2Top10">
+        <a class="a-left" (click)="toSection1()"><</a>
+            <div class="item" *ngFor="let element of secondElements">
+                <img [src]="element.poster" alt="element">
+            </div>
+        <a class="a-right" (click)="toSection1()">></a>
+    </section>
+</div>

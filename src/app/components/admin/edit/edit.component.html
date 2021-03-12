@@ -5,17 +5,23 @@
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-    <form [formGroup]="editForm" (submit)="save(editForm.value)">
+    <form [formGroup]="editForm" (submit)="edit(editForm.value)">
         <div class="modal-body">
-
-            <input type="text" class="form-control" formControlName="title" name="title" placeholder="Title">
+            <select class="form-control" formControlName="type">
+                <option>Pelicula</option>
+                <option>Serie</option>
+            </select>
+            <div *ngIf="err_type" class="alert alert-danger mt-2" role="alert">
+                Seleccione un tipo.
+            </div>
+            <input type="text" class="form-control mt-2" formControlName="title" name="title" placeholder="Title">
             <div *ngIf="err_title" class="alert alert-danger mt-2" role="alert">
                 Error al insertar título!
             </div>
             <textarea type="text" class="form-control mt-2" formControlName="description" name="description"
                 placeholder="Description"></textarea>
             <div *ngIf="err_description" class="alert alert-danger mt-2" role="alert">
-               Error al insertar descripción!
+                Error al insertar descripción!
             </div>
             <input type="text" class="form-control mt-2" formControlName="category" name="category"
                 placeholder="Category">
@@ -40,8 +46,10 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-outline-dark" type="submit" (click)="edit(editForm.value)" [disabled]="disable()">Verificar</button>
-            <button type="button" class="btn btn-outline-dark" type="submit" (click)="c('Save click')" [disabled]="activeSubmit()">Save</button>
+            <button type="button" class="btn btn-outline-dark" type="submit" (click)="verify(editForm.value)"
+                [disabled]="disable()">Verificar</button>
+            <button type="button" class="btn btn-outline-dark" type="submit" (click)="c('Save click')"
+                [disabled]="activeSubmit()">Save</button>
         </div>
     </form>
 </ng-template>

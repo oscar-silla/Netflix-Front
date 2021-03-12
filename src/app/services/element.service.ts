@@ -13,19 +13,24 @@ export class ElementService {
   // Get All - Get Method
   getAllElements() {
     const headers = new HttpHeaders().set("Content-Type", "application/json");
-    return this.http.get<Element[]>(this.URL, {headers: headers});
+    return this.http.get<Element[]>(this.URL, { headers: headers });
   }
-
-  // Get By Title - Get Method
-  /* getElementByTitle(value) {
-    this.getAllElements().subscribe(res => {
-      return res['title'].includes(value);
-    })
-  } */
 
   // Add new - POST Method
   createElement(elementDetail) {
     const headers = new HttpHeaders().set("Content-Type", "application/json");
-    return this.http.post<Element>(this.URL + "create", elementDetail, {headers: headers});
+    return this.http.post<Element>(this.URL + "create", elementDetail, { headers: headers });
+  }
+
+  // Edit Element - PUT Method
+  updateElement(id, elementDetail) {
+    const headers = new HttpHeaders().set("Content-Type", "application/json");
+    return this.http.put(this.URL + `update/${id}`, elementDetail, { headers: headers });
+  }
+
+  // Delete Element - Delete Method
+  deleteElement(id) {
+    const headers = new HttpHeaders().set("Content-Type", "application/json");
+    return this.http.delete(this.URL + `delete/${id}`, {headers: headers});
   }
 }

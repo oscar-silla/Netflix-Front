@@ -1,4 +1,4 @@
-<div>
+<div class="div-search">
     <form [formGroup]="searchForm" (submit)="search(searchForm.value)" class="flex">
         <input type="text" name="title" formControlName="title" class="form-control mb-2 input-margin"
             placeholder="Búsqueda por título">
@@ -25,8 +25,8 @@
                 <td>{{element.mp4}}</td>
                 <td>{{element._id}}</td>
                 <td>
-                    <app-edit></app-edit>
-                    <button class="btn btn-danger m-1">
+                    <app-edit (click)="showId(element._id)" (updated)="receive($event)" [id_element]="id_element"></app-edit>
+                    <button class="btn btn-danger m-1" (click)="deleteElement(element._id)">
                         Borrar
                     </button>
                 </td>
@@ -39,6 +39,12 @@
                 <td>{{element.title}}</td>
                 <td>{{element.mp4}}</td>
                 <td>{{element._id}}</td>
+                <td>
+                    <app-edit (click)="showId(element._id)" (updated)="receiveSearch($event)" [id_element]="id_element"></app-edit>
+                    <button class="btn btn-danger m-1" (click)="deleteElementSearch(element._id)">
+                        Borrar
+                    </button>
+                </td>
             </tr>
         </tbody>
     </table>

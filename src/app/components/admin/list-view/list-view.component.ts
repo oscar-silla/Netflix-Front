@@ -10,6 +10,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class ListViewComponent implements OnInit {
 
+  id_element: string;
+
+  received_id: boolean;
+
   @Input()
   created: boolean; // Father to son
 
@@ -23,7 +27,7 @@ export class ListViewComponent implements OnInit {
 
   // All List
   elements: Element[];
-  currentpage: number = 1
+  currentpage: number = 1;
 
 
   constructor(private elementService: ElementService, private formBuilder: FormBuilder) {
@@ -54,6 +58,49 @@ export class ListViewComponent implements OnInit {
     const title = value['title'].toLowerCase();
     this.title = title;
     this.elementsFound = this.elements.filter(element => element['title'].toLowerCase().includes(title));
+  }
+
+  // Get and send ID_ELEMENT
+  showId(id: string) {
+    this.id_element = id;
+  }
+
+  // Receive msg to update (Update all list)
+  receive(e) {
+    if (e) {
+      this.elementService.getAllElements().subscribe(res => {
+        this.elements = res['data'];
+      });
+    }
+  }
+
+  // Receive msg to update (Update Search list)
+  receiveSearch(e) {
+    this.received_id = e;
+    if (e) {
+      this.elementService.getAllElements().subscribe(res => {
+        this.elementsFound = res['data'].filter(element => element['_id'].toLowerCase().includes(this.id_element));
+        this.elements = res['data'];
+      });
+    }
+  }
+
+  // DELETE
+  deleteElement(id) {
+    this.elementService.deleteElement(id).subscribe(res => {
+      this.elementService.getAllElements().subscribe(res => {
+        this.elements = res['data'];
+      });
+    })
+  }
+
+  deleteElementSearch(id) {
+    this.elementService.deleteElement(id).subscribe(res => {
+      this.elementService.getAllElements().subscribe(res => {
+        this.elementsFound = res['data'].filter(element => element['_id'].toLowerCase().includes(this.id_element));
+        this.elements = res['data'];
+      });
+    });
   }
 
 }

@@ -1,6 +1,7 @@
-import { Component, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ElementService } from 'src/app/services/element.service';
 
 @Component({
   selector: 'app-edit',
@@ -10,12 +11,17 @@ import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class EditComponent implements OnInit {
 
-  editForm: FormGroup
+  @Input() id_element: string;
 
+  @Output() updated = new EventEmitter();
+
+  editForm: FormGroup
   validated: boolean = false;
   verifyButton:boolean = false;
+  isUpdated: boolean = false;
 
   errors: string[] = [];
+  err_type: boolean = false;
   err_title: boolean = false;
   err_description: boolean = false;
   err_category: boolean = false;
@@ -26,11 +32,13 @@ export class EditComponent implements OnInit {
 
   constructor(config: NgbModalConfig,
     private modalService: NgbModal,
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder,
+    private elementService: ElementService) {
     config.backdrop = 'static';
     config.keyboard = false;
     // Validator
     this.editForm = this.formBuilder.group({
+      type: ['Pelicula', Validators.required],
       title: ['', Validators.required],
       description: ['', Validators.required],
       category: ['', Validators.required],
@@ -41,6 +49,7 @@ export class EditComponent implements OnInit {
     });
   }
 
+  // Open Modal
   open(content) {
     this.modalService.open(content);
   }
@@ -48,7 +57,11 @@ export class EditComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  // Validate fields for warning alerts
   validateFields() {
+    if (this.errors.includes('type')) {
+      this.err_type = true;
+    }
     if (this.errors.includes('title')) {
       this.err_title = true;
     }
@@ -72,7 +85,9 @@ export class EditComponent implements OnInit {
     }
   }
 
+  // Clean warning alerts
   clean() {
+    this.err_type = false;
     this.err_title = false;
     this.err_description = false;
     this.err_category = false;
@@ -82,11 +97,13 @@ export class EditComponent implements OnInit {
     this.err_poster = false;
   }
 
-  edit(value) {
+  // Verify and Validations
+  verify(value) {
     this.clean();
     this.errors = [];
     console.log(this.errors)
     // Validations
+    if (value.type === '') this.errors.push('type');
     if (value.title === '') this.errors.push('title');
     if (value.description === '') this.errors.push('description');
     if (value.category === '') this.errors.push('category');
@@ -103,8 +120,10 @@ export class EditComponent implements OnInit {
     }
   }
 
+  // Disable Inputs and VerifyButton after validations
   disable() {
     if (this.validated) {
+      this.editForm.controls['type'].disable();
       this.editForm.controls['title'].disable();
       this.editForm.controls['description'].disable();
       this.editForm.controls['category'].disable();
@@ -117,11 +136,22 @@ export class EditComponent implements OnInit {
     };
   }
 
+  // Active BTN_SAVE
   activeSubmit() {
-    
+    if (this.verifyButton) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
-  save(value) {
-    console.log(value);
+  // Edit
+  edit(value) {
+    this.isUpdated = false;
+    this.elementService.updateElement(this.id_element, value).subscribe(res => {
+      console.log(res);
+      this.isUpdated = true;
+      this.updated.emit(this.isUpdated);
+    });
   }
 }

@@ -5,7 +5,14 @@
         </div>
         <div class="card-body">
             <form (submit)="submit(createForm.value)" [formGroup]="createForm">
-                <input type="text" class="form-control" formControlName="title" name="title" placeholder="Title">
+                <select class="form-control" formControlName="type">
+                    <option>Pelicula</option>
+                    <option>Serie</option>
+                </select>
+                <div *ngIf="err_type == true" class="alert alert-danger mt-2" role="alert">
+                    Invalid type!
+                </div>
+                <input type="text" class="form-control mt-2" formControlName="title" name="title" placeholder="Title">
                 <div *ngIf="err_title == true" class="alert alert-danger mt-2" role="alert">
                     Invalid name!
                 </div>

@@ -1,4 +1,5 @@
 export interface Element {
+    type: string;
     title: string;
     description: string;
     category: string;
